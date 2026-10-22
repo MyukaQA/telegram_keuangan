@@ -13,3 +13,4 @@ Thumbs.db
 *.local
 .env
 .agents
+Config.gs
