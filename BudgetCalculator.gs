@@ -40,9 +40,6 @@ class BudgetCalculator {
     var tanggalGajianStr = sisaHariResult.tanggalGajianStr;  // ← ambil string
     
     // Hitung daily budget
-    var dailyBudget = sisaUang / sisaHari;  // ← sekarang benar!
-    
-    // Hitung daily budget
     var dailyBudget = sisaHari > 0 ? sisaUang / sisaHari : 0;
     
     // Tentukan status

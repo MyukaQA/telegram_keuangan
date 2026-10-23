@@ -377,7 +377,7 @@ class CommandHandler {
     
     try {
       console.log("Getting sheet...");
-      var sheet = this.db.getSheet("Cicilan");
+      var sheet = this.db.getCicilanSheet();
       console.log("Sheet name: " + sheet.getName());
       console.log("Sheet rows: " + sheet.getLastRow());
       
@@ -440,7 +440,7 @@ class CommandHandler {
       
       // Cari cicilan
       console.log("Getting Cicilan sheet...");
-      var sheetCicilan = this.db.getSheet("Cicilan");
+      var sheetCicilan = this.db.getCicilanSheet();
       var data = sheetCicilan.getDataRange().getValues();
       
       console.log("Total rows: " + data.length);
@@ -488,7 +488,7 @@ class CommandHandler {
       }
       
       // Catat pembayaran
-      var sheetBayar = this.db.getSheet("PembayaranCicilan");
+      var sheetBayar = this.db.getPembayaranCicilanSheet();
       sheetBayar.appendRow([
         "P" + new Date().getTime(),
         found.id,
@@ -524,7 +524,7 @@ class CommandHandler {
     
     try {
       console.log("Getting Cicilan sheet...");
-      var sheet = this.db.getSheet("Cicilan");
+      var sheet = this.db.getCicilanSheet();
       console.log("Sheet found: " + sheet.getName());
       
       var data = sheet.getDataRange().getValues();

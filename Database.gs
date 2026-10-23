@@ -21,7 +21,7 @@ class Database {
   // Transaksi Methods
   getTransaksiSheet() {
     return this.getSheet(SHEET_NAMES.TRANSAKSI, 
-      ["Timestamp", "UserID", "Nama", "Kategori", "Nominal", "Tipe", "Status", "SyncedAt"]);
+      ["Timestamp", "UserID", "Nama", "Kategori", "Nominal", "Tipe", "Status", "SyncedAt", "TransactionID"]);
   }
   
   saveTransaksi(chatId, nama, kategori, nominal, tipe, tanggal = new Date()) {
@@ -62,7 +62,8 @@ class Database {
           nominal: data[i][4],
           tipe: data[i][5],
           status: data[i][6],
-          syncedAt: data[i][7]
+          syncedAt: data[i][7],
+          transactionId: data[i][8] || ""
         });
       }
     }
@@ -196,5 +197,16 @@ class Database {
     
     sheet.appendRow([chatId, tglGajian, batasBawah, batasAtas, "aktif"]);
     return false; // New
+  }
+
+  // Cicilan Methods
+  getCicilanSheet() {
+    return this.getSheet(SHEET_NAMES.CICILAN || "Cicilan", 
+      ["ID", "UserID", "Nama", "Total", "PerBulan", "SisaHutang", "TglJatuhTempo", "Status", "CreatedAt"]);
+  }
+
+  getPembayaranCicilanSheet() {
+    return this.getSheet(SHEET_NAMES.PEMBAYARAN_CICILAN || "PembayaranCicilan", 
+      ["ID", "CicilanID", "UserID", "Tanggal", "Nominal", "SisaBaru"]);
   }
 }

@@ -17,7 +17,9 @@ const CONFIG = {
 const SHEET_NAMES = {
   TRANSAKSI: "Transaksi",
   USERS: "Users",
-  PENGATURAN: "Pengaturan"
+  PENGATURAN: "Pengaturan",
+  CICILAN: "Cicilan",
+  PEMBAYARAN_CICILAN: "PembayaranCicilan"
 };
 
 const KEYWORDS = {
