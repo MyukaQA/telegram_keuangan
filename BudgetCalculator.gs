@@ -61,27 +61,40 @@ class BudgetCalculator {
   }
 
   hitungSisaHari(hariIni, bulanIni, tahunIni, tanggalGajian) {
-    var bulanGajianBerikutnya = bulanIni;
-    var tahunGajianBerikutnya = tahunIni;
+    var sekarang = new Date(tahunIni, bulanIni, hariIni);
+    sekarang.setHours(0, 0, 0, 0);
     
-    if (hariIni >= tanggalGajian) {
-      bulanGajianBerikutnya++;
-      if (bulanGajianBerikutnya > 11) {
-        bulanGajianBerikutnya = 0;
-        tahunGajianBerikutnya++;
+    var bulanTarget = bulanIni;
+    var tahunTarget = tahunIni;
+    
+    // Hari maksimal di bulan berjalan (28, 29, 30, atau 31)
+    var maxHariBulanIni = new Date(tahunIni, bulanIni + 1, 0).getDate();
+    var gajianBulanIni = Math.min(tanggalGajian, maxHariBulanIni);
+    
+    if (hariIni >= gajianBulanIni) {
+      bulanTarget++;
+      if (bulanTarget > 11) {
+        bulanTarget = 0;
+        tahunTarget++;
       }
     }
     
-    var tanggalGajianDate = new Date(tahunGajianBerikutnya, bulanGajianBerikutnya, tanggalGajian);
-    var sekarang = new Date();
-    var selisihHari = Math.ceil((tanggalGajianDate - sekarang) / (1000 * 60 * 60 * 24));
+    // Hari maksimal di bulan target (cegah overflow di Feb/Apr/Jun/Sep/Nov)
+    var maxHariTarget = new Date(tahunTarget, bulanTarget + 1, 0).getDate();
+    var gajianTargetFix = Math.min(tanggalGajian, maxHariTarget);
+    
+    var targetDate = new Date(tahunTarget, bulanTarget, gajianTargetFix);
+    targetDate.setHours(0, 0, 0, 0);
+    
+    // Hitung selisih hari kalender murni
+    var selisihHari = Math.round((targetDate - sekarang) / (1000 * 60 * 60 * 24));
     
     // Pastikan minimal 1 hari (kalau hari ini gajian)
     if (selisihHari <= 0) selisihHari = 1;
     
     return {
       hari: selisihHari,
-      tanggalGajianStr: tanggalGajian + "/" + (bulanGajianBerikutnya + 1) + "/" + tahunGajianBerikutnya
+      tanggalGajianStr: gajianTargetFix + "/" + (bulanTarget + 1) + "/" + tahunTarget
     };
   }  
 
